@@ -70,7 +70,7 @@ static void srp_test_task(void *context) {
     const char *username = "alice";
     const char *password = "password123";
 
-    const int niter = 1;
+    const int niter = 1000;
 
     int successes = 0, failures = 0;
 
