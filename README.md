@@ -48,8 +48,10 @@ Test
 ----
 
 The test can be ran from the command line as a normal ESP-IDF project.
-Simply run ```make flash``` to run on a connected esp32 board.
-In the test Makefile, you can uncomment the line that defines the ```_SRP_TEST_VECTOR``` constant to use hard coded test vectors.
+first,install esp32 build tools
+https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/index.html#installation
+
+second, Simply run ```idf.py -p /dev/tty.usbserial-0001(your esp32 device) flash  monitor``` to run on a connected esp32 board.
 
 Usage
 -----
