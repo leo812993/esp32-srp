@@ -36,7 +36,7 @@
 #include "errno.h"
 #include "esp_log.h"
 
-#include "esp32-srp/srp.h"
+#include "srp.h"
 
 static const char *TAG = "SRP_TEST";
 
@@ -65,12 +65,12 @@ static void srp_test_task(void *context) {
     unsigned long long client_duration = 0, server_duration = 0;
 
     const SRP_TYPE ng_type = SRP_TYPE_3072;
-    const SRP_CRYPTO_HASH_ALGORITHM alg = SRP_CRYPTO_HASH_ALGORITHM_SHA512;
+    const SRP_CRYPTO_HASH_ALGORITHM alg = SRP_CRYPTO_HASH_ALGORITHM_SHA256;
 
     const char *username = "alice";
     const char *password = "password123";
 
-    const int niter = 1000;
+    const int niter = 1;
 
     int successes = 0, failures = 0;
 
@@ -247,9 +247,7 @@ cleanup:
 }
 
 int start_srp_test_task() {
-    xTaskHandle handle;
-    int ret = xTaskCreate(srp_test_task, "SRP_Task", 10240, NULL, 8, &handle);
-
+    int ret = xTaskCreate(srp_test_task, "SRP_Task", 10240, NULL, 8, NULL);
     if (ret != pdPASS)  {
         ESP_LOGI(TAG, "create task %s failed", "SRP_Task");
     }

@@ -43,10 +43,10 @@
 #include "mbedtls/ctr_drbg.h"
 #include "mbedtls/sha256.h"
 #include "mbedtls/sha512.h"
-
+#include "esp_random.h"
 #include "esp_log.h"
 
-#include "esp32-srp/srp.h"
+#include "srp.h"
 
 #define SHA256_DIGEST_LENGTH 32
 #define SHA512_DIGEST_LENGTH 64
