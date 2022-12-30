@@ -715,6 +715,8 @@ static int srp_compute_key_server(srp_context_t srp_ctx, mbedtls_mpi *A) {
     ESP32_SRP_CHK(mbedtls_mpi_exp_mod(tmp1, srp_ctx->v, u, srp_ctx->N, RR));
     /* tmp2 = (A * (v^ux))                          */
     ESP32_SRP_CHK(mbedtls_mpi_mul_mpi(tmp2, A, tmp1));
+    /*should not bigger than N according to the formula*/
+    ESP32_SRP_CHK(mbedtls_mpi_mod_mpi( tmp2, tmp2, srp_ctx->N));
     /* S = (A * (v^u)) ^ b % N                      */
     ESP32_SRP_CHK(mbedtls_mpi_exp_mod(S, tmp2, srp_ctx->private_key, srp_ctx->N, RR));
     srp_context_set_S(srp_ctx, S);
@@ -773,6 +775,8 @@ static int srp_compute_key_client(srp_context_t srp_ctx, mbedtls_mpi *B) {
     ESP32_SRP_CHK(mbedtls_mpi_exp_mod(tmp1, srp_ctx->g, srp_ctx->x, srp_ctx->N, RR));
     /* tmp3 = k * (g^x)%N                           */
     ESP32_SRP_CHK(mbedtls_mpi_mul_mpi(tmp3, srp_ctx->k, tmp1));
+    /*should not bigger than N according to the formula*/
+    ESP32_SRP_CHK(mbedtls_mpi_mod_mpi( tmp3, tmp3, srp_ctx->N));
     /* tmp1 = (B - k * (g^x)%N)                     */
     ESP32_SRP_CHK(mbedtls_mpi_sub_mpi(tmp1, B, tmp3));
     /* S = (B - k * (g^x)%N) ^ (a + (u * x) % N     */
